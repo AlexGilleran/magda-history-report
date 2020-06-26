@@ -1,0 +1,11 @@
+image:
+  imagePullSecret: gh-docker
+  tag: latest
+
+global:
+  openfaas:
+    functionNamespace: openfaas-fn
+
+secrets:
+- secret-name-1
+- secret-name-2

@@ -1,0 +1,44 @@
+# More exmaples of openfaas function here: https://github.com/openfaas/openfaas-operator
+{{- if and .Values.global.openfaas .Values.global.openfaas.functionNamespace }}
+apiVersion: openfaas.com/v1
+kind: Function
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: {{ include "magda-function-template.openfaaFunctionNamespace" . | quote }}
+  labels: 
+    magdaType: 
+spec:
+  name: {{ .Chart.Name }}
+  handler: node bootstrap.js
+  image: "{{ .Values.image.repository | default .Values.global.image.repository | default .Values.defaultImage.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Values.global.image.tag | default .Values.defaultImage.tag }}"
+  labels: 
+    com.openfaas.scale.zero: "true"
+    # You can add any other labels to help the caller to tell the purpose of the functions
+    magdaType: general-purpose-function
+  annotations:
+    com.openfaas.health.http.path: "/healthz"
+    com.openfaas.health.http.initialDelay: "10s"
+  environment:
+    read_timeout: 65s
+    write_timeout: 65s
+    exec_timeout: 60s
+{{- /*
+See chart value file for details of the logic used to generate this setting value below.!!!
+*/}}
+{{- $imagePullSecret := (ne (.Values.image.imagePullSecret | typeOf) "<nil>") | ternary .Values.image.imagePullSecret ( (ne (.Values.global.image.imagePullSecret | typeOf) "<nil>") | ternary .Values.global.image.imagePullSecret .Values.defaultImage.imagePullSecret ) -}}
+{{- if .Values.secrets }}
+  secrets: 
+  {{- range .Values.secrets }}
+    - {{.}}
+  {{- end }}
+  {{- if ne ($imagePullSecret | toString) "false" }}
+    - {{ $imagePullSecret }}
+  {{- end }}
+{{- else }}
+  {{- if ne ($imagePullSecret | toString) "false" }}
+  secrets: 
+    - {{ $imagePullSecret }}
+  {{- end }}
+{{- end }}
+{{ .Values.resources | toYaml | indent 2 -}}
+{{- end }}

@@ -1,0 +1,11 @@
+global:
+  openfaas:
+    # namespacePrefix should be magda-core deployment namesapce
+    # We only need this when deploy function seperately
+    namespacePrefix: default
+    functionNamespace: openfaas-fn
+
+image:
+    repository: "localhost:5000/data61"
+    tag: "latest"
+    pullPolicy: Always
