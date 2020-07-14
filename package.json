@@ -11,7 +11,7 @@
     "build": "tsc -b",
     "watch": "tsc -b --watch",
     "start": "node dist/index.js",
-    "dev": "run-typescript-in-nodemon src/index.ts",
+    "dev": "run-typescript-in-nodemon src/bootstrap.ts",
     "test": "mocha --require ts-node/register \"src/test/**/*.spec.ts\"",
     "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
     "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
@@ -21,12 +21,13 @@
   },
   "devDependencies": {
     "@magda/scripts": "^0.0.57-0",
-    "@types/express": "^4.0.37",
-    "@types/mocha": "^7.0.1",
     "@types/chai": "^4.2.8",
-    "mocha": "^7.0.1",
+    "@types/express": "^4.17.6",
+    "@types/mocha": "^7.0.1",
+    "@types/urijs": "^1.19.9",
     "chai": "^4.2.0",
     "husky": "^3.1.0",
+    "mocha": "^7.0.1",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.0",
@@ -34,7 +35,10 @@
     "typescript": "^3.7.2"
   },
   "dependencies": {
+    "@magda/registry-client": "^0.0.57-0-beta-2",
     "@magda/scripts": "^0.0.57-0",
+    "@magda/typescript-common": "^0.0.57-0-temp",
+    "csv-writer": "^1.6.0",
     "express": "^4.15.4"
   },
   "config": {
