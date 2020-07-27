@@ -28,6 +28,10 @@ resources:
   limits:
     cpu: 100m
 
+# used to generate registry api base url
+registryApiVersion: "v0"
+authApiVersion: "v0"
+
 # Set a list of secrets that pass to function
 # Secrets are accessible from `/var/openfaas/secrets/<secret-name>` as file
 # secrets:

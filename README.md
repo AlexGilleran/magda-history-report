@@ -4,17 +4,17 @@ An Openfass Serverless Function template for Magda. You can also use [faas-cli](
 
 > You can click the `Use this template` Github function button above to create a new repository from this template repository instead of forking it. More details see [Github Help Document: Creating a repository from a template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template)
 
-### Supply Your Own Function Code
+### Secret Requirement
 
-You can supply your own function code in [`src/index.ts`](./src/index.ts). e.g.:
+Please note: this function requires the secret `auth-secrets` in openfaas function namespace.
 
-```typescript
-export default async function myFunction(input: any) {
-    return "hello world!\n";
-}
+The newer version `create-secrets` that is available in Magda repo should create secret `auth-secrets` in openfaas function already.
+
+If you want to install this function to an existing deployment, you can use the following command to copy secret `auth-secrets` from main magda namespace (assume main namespace is `default`).
+
+```bash
+kubectl get secret auth-secrets --namespace=default --export -o yaml | kubectl apply --namespace=default-openfaas-fn -f -
 ```
-
-> Invoke you function with `Content-Type: application/json` header will make your function receive unserialised data as input parameter.
 
 ### Install Project Dependencies
 
