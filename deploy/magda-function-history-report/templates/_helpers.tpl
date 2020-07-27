@@ -17,7 +17,7 @@ Generating the magda registry url.
 */}}
 {{- define "magda-function-history-report.registryApiUrl" -}}
 {{- $namespacePrefix := .Values.global.openfaas.namespacePrefix | default .Release.Namespace -}}
-{{- $namespacePrefix | printf "http://registry-api.%s.svc.cluster.local/%s" .Values.registryApiVersion -}}
+{{- .Values.registryApiVersion | printf "http://registry-api.%s.svc.cluster.local/%s" $namespacePrefix -}}
 {{- end -}}
 
 {{/*
@@ -25,5 +25,5 @@ Generating the magda auth url.
 */}}
 {{- define "magda-function-history-report.authApiUrl" -}}
 {{- $namespacePrefix := .Values.global.openfaas.namespacePrefix | default .Release.Namespace -}}
-{{- $namespacePrefix | printf "http://authorization-api.%s.svc.cluster.local/%s" .Values.authApiVersion -}}
+{{- .Values.authApiVersion | printf "http://authorization-api.%s.svc.cluster.local/%s" $namespacePrefix -}}
 {{- end -}}

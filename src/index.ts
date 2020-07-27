@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { promisify } from "util";
+import stream from "stream";
 import CsvStream from "csv-stringify";
 import jwt from "jsonwebtoken";
 import getSecret from "./getSecret";
@@ -11,7 +12,7 @@ async function getUserIdFromReq(req?: Request): Promise<string | null> {
         return null;
     }
     const jwtToken = req.header("X-Magda-Session");
-    if (jwtToken) {
+    if (!jwtToken) {
         return null;
     }
     const jwtSecret = await getSecret("jwt-secret");
@@ -36,9 +37,13 @@ function handleError(e: Error, res?: Response) {
         // work under process fork / pipe mode / local. No http server proxy
         throw e;
     } else {
-        console.log(e);
+        console.error("Caught Error:" + e);
         // --- we still set to 200 in case some browser won't show text body for error status code
-        res.status(200).send("Error: " + e);
+        if (!res.headersSent) {
+            res.status(200).send("Error: " + e);
+        } else {
+            res.write("Error: " + e);
+        }
     }
 }
 
@@ -94,12 +99,11 @@ export default async function myFunction(
             userId
         });
 
-        const csvStream = CsvStream(
-            {
-                header: true
-            },
-            (err, data) => handleError(err, res)
-        );
+        const csvStream = CsvStream({
+            header: true
+        });
+
+        let stream: stream.Stream;
 
         if (res) {
             // http usage: function served by a http server
@@ -114,18 +118,28 @@ export default async function myFunction(
                     "-"
                 )}.csv"`
             });
-            eventStream
+
+            stream = eventStream
                 .pipe(transformer)
                 .pipe(csvStream)
                 .pipe(res);
         } else {
             // work under process fork / pipe mode / local. No http server proxy
-            eventStream
+            stream = eventStream
                 .pipe(transformer)
                 .pipe(csvStream)
                 .pipe(process.stdout);
         }
+
+        stream.on("error", e => handleError(e, res));
     } catch (e) {
         handleError(e, res);
+    }
+
+    if (res) {
+        // tell bootstrap web-server that the response has been handled manually
+        return res;
+    } else {
+        return "";
     }
 }

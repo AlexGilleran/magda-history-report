@@ -53,16 +53,21 @@ async function getRecordHistory(
         .filter(item => !!item)
         .concat(DEFAULT_FETCH_ASPECTS.map(aspect => "aspect=" + aspect));
 
+    const tenantId = process.env.tenantId;
+    const headers = {
+        "X-Magda-Tenant-Id": tenantId ? tenantId : "0"
+    } as any;
+
+    if (options.jwtToken) {
+        headers["X-Magda-Session"] = options.jwtToken;
+    }
+
     const res = await fetch(
         `${registryUrl}/records/${encodeURIComponent(
             recordId
         )}/history?${queryParameters.join("&")}`,
         {
-            headers: options.jwtToken
-                ? {
-                      "X-Magda-Session": options.jwtToken
-                  }
-                : {}
+            headers
         }
     );
 

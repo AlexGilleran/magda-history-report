@@ -22,6 +22,7 @@ spec:
     read_timeout: 65s
     write_timeout: 65s
     exec_timeout: 60s
+    tenantId: {{ .Values.tenantId | quote }}
     registryApiUrl: {{ include "magda-function-history-report.registryApiUrl" . | quote }}
     authApiUrl: {{ include "magda-function-history-report.authApiUrl" . | quote }}
 {{- /*

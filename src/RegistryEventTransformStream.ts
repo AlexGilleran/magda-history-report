@@ -13,16 +13,27 @@ async function getUserName(
     authApiUrl: string,
     userId: string
 ): Promise<string> {
-    if (typeof userNameCache[userId] !== "undefined") {
+    try {
+        if (typeof userNameCache[userId] !== "undefined") {
+            return userNameCache[userId];
+        }
+        const tenantId = process.env.tenantId;
+        const headers = {
+            "X-Magda-Tenant-Id": tenantId ? tenantId : "0"
+        } as any;
+
+        const res = await fetch(`${authApiUrl}/public/users/${userId}`, {
+            headers
+        });
+        if (!res.ok) {
+            userNameCache[userId] = "N/A";
+        } else {
+            userNameCache[userId] = (await res.json())["displayName"];
+        }
         return userNameCache[userId];
+    } catch (e) {
+        return "N/A";
     }
-    const res = await fetch(`${authApiUrl}/public/users/${userId}`);
-    if (!res.ok) {
-        userNameCache[userId] = "N/A";
-    } else {
-        userNameCache[userId] = (await res.json())["displayName"];
-    }
-    return userNameCache[userId];
 }
 
 const recordNameCache = {} as {
@@ -34,29 +45,38 @@ async function getRecordName(
     recordId: string,
     userId: string | null
 ): Promise<string> {
-    if (typeof recordNameCache[recordId] !== "undefined") {
-        return recordNameCache[recordId];
-    }
-    const jwtToken = userId ? await signJwtToken(userId) : null;
-    const res = await fetch(
-        `${registryApiUrl}/records/${encodeURIComponent(recordId)}`,
-        {
-            headers: jwtToken
-                ? {
-                      "X-Magda-Session": jwtToken
-                  }
-                : {}
+    try {
+        if (typeof recordNameCache[recordId] !== "undefined") {
+            return recordNameCache[recordId];
         }
-    );
-    if (!res.ok) {
-        recordNameCache[userId] = "N/A";
-    } else {
-        recordNameCache[userId] = (await res.json())["name"];
-        recordNameCache[userId] = recordNameCache[userId]
-            ? recordNameCache[userId]
-            : "N/A";
+        const jwtToken = userId ? await signJwtToken(userId) : null;
+
+        const tenantId = process.env.tenantId;
+        const headers = {
+            "X-Magda-Tenant-Id": tenantId ? tenantId : "0"
+        } as any;
+        if (jwtToken) {
+            headers["X-Magda-Session"] = jwtToken;
+        }
+
+        const res = await fetch(
+            `${registryApiUrl}/records/${encodeURIComponent(recordId)}`,
+            {
+                headers
+            }
+        );
+        if (!res.ok) {
+            recordNameCache[userId] = "N/A";
+        } else {
+            recordNameCache[userId] = (await res.json())["name"];
+            recordNameCache[userId] = recordNameCache[userId]
+                ? recordNameCache[userId]
+                : "N/A";
+        }
+        return userNameCache[userId];
+    } catch (e) {
+        return "N/A";
     }
-    return userNameCache[userId];
 }
 
 export const csvHeaders = ["Event id"];
@@ -123,8 +143,8 @@ export default class RegistryEventTransformStream extends Transform {
             const jsonData = JSON.stringify(
                 event?.data?.aspect ? event.data.aspect : event.data
             );
-            const jsonPatch = (event?.data?.path
-                ? event.data.path
+            const jsonPatch = (event?.data?.patch
+                ? event.data.patch
                 : []) as any[];
 
             if (!jsonPatch.length) {
@@ -146,6 +166,7 @@ export default class RegistryEventTransformStream extends Transform {
                     })
                 );
             }
+            callback();
         } catch (e) {
             callback(e);
         }
