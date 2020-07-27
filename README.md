@@ -1,4 +1,4 @@
-# magda-function-template
+# magda-function-history-report
 
 An Openfass Serverless Function template for Magda. You can also use [faas-cli](https://github.com/openfaas/faas-cli) to create a Openfaas function. However, this template leverage our own toolset and works with our own deployment / CI system better.
 
@@ -37,20 +37,20 @@ yarn install
     -   Install [`faas-cli`](https://github.com/openfaas/faas-cli)
     -   Run `kubectl --namespace=[openfaas gateway namespace] port-forward svc/gateway 8080` to port-forward openfaas gateway
         -   Here, [openfaas gateway namespace] is `[magda-core namespace]-openfaas`. e.g. if magda is deployed to `default` namespace, `[openfaas gateway namespace]` would be `default-openfaas`
-    -   Invoke by Run `echo "" | faas-cli faas-cli invoke magda-function-template`
-    -   Alternatively, you can use [Postman](https://www.postman.com/) to send a HTTP Request (HTTP method doesn't matter here) to Magda gateway `/api/v0/openfaas/function/magda-function-template`
+    -   Invoke by Run `echo "" | faas-cli faas-cli invoke magda-function-history-report`
+    -   Alternatively, you can use [Postman](https://www.postman.com/) to send a HTTP Request (HTTP method doesn't matter here) to Magda gateway `/api/v0/openfaas/function/magda-function-history-report`
 
 ### Deploy with Magda
 
 -   Add as Magda dependencies:
 
 ```yaml
-- name: magda-function-template
+- name: magda-function-history-report
   version: 0.0.57-0
   repository: https://charts.magda.io
   tags:
       - all
-      - magda-function-template
+      - magda-function-history-report
 ```
 
 -   Run `helm dep build` to pull the dependency

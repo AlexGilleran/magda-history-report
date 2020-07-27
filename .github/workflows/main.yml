@@ -3,7 +3,7 @@ name: Main CI Workflow
 on: push
 
 env:
-  REPO_NAME: magda-function-template
+  REPO_NAME: magda-function-history-report
 
 jobs:
   build-test-docker:

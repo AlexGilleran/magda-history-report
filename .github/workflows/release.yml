@@ -5,7 +5,7 @@ on:
     types: [published]
 
 env:
-  REPO_NAME: magda-function-template
+  REPO_NAME: magda-function-history-report
 
 jobs:
   release-helm-chart:

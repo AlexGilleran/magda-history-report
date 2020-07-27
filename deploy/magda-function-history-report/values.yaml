@@ -9,7 +9,7 @@ global:
 # You can set `imagePullSecret` value to `false` (bool) to reset the value (see example below)
 
 image: 
-  name: "magda-function-template"
+  name: "magda-function-history-report"
   # repository: 
   # tag: 
   # pullPolicy: 
