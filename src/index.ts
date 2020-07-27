@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { promisify } from "util";
 import CsvStream from "csv-stringify";
 import jwt from "jsonwebtoken";
-import { getSecretValue } from "./utils";
+import getSecret from "./getSecret";
 import RegistryEventStream from "./RegistryEventStream";
 import RegistryEventTransformStream from "./RegistryEventTransformStream";
 
@@ -14,7 +14,7 @@ async function getUserIdFromReq(req?: Request): Promise<string | null> {
     if (jwtToken) {
         return null;
     }
-    const jwtSecret = await getSecretValue("auth-secrets", "jwt-secret");
+    const jwtSecret = await getSecret("jwt-secret");
     if (!jwtSecret) {
         throw new Error("Invalud empty jwtSecret");
     }

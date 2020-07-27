@@ -34,6 +34,5 @@ authApiVersion: "v0"
 
 # Set a list of secrets that pass to function
 # Secrets are accessible from `/var/openfaas/secrets/<secret-name>` as file
-# secrets:
-# - secret-name-1
-# - secret-name-2
+secrets:
+- auth-secrets
