@@ -162,7 +162,7 @@ export default class RegistryEventTransformStream extends Transform {
                         "JSON Patch Operation": p?.op ? p.op : "",
                         "JSON Path": p?.path ? p.path : "",
                         "JSON Path Value": p?.value ? p.value : "",
-                        "JSON Value": jsonData
+                        "JSON Value": ""
                     })
                 );
             }
