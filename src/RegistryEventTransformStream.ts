@@ -79,8 +79,6 @@ async function getRecordName(
     }
 }
 
-export const csvHeaders = ["Event id"];
-
 export default class RegistryEventTransformStream extends Transform {
     private authApiUrl: string;
     private registryApiUrl: string;
