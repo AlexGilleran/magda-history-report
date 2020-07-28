@@ -44,6 +44,7 @@ async function getRecordHistory(
     }
 ) {
     const queryParameters: string[] = [
+        "dereference=true",
         typeof options.start === "undefined" ? "" : `start=${options.start}`,
         typeof options.pageToken === "undefined"
             ? ""
