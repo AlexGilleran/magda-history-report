@@ -6,7 +6,7 @@ metadata:
   name: {{ .Chart.Name }}
   namespace: {{ include "magda-function-history-report.openfaaFunctionNamespace" . | quote }}
   labels: 
-    magdaType: 
+    magdaType: report
 spec:
   name: {{ .Chart.Name }}
   handler: node bootstrap.js
