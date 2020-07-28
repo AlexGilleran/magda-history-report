@@ -129,7 +129,7 @@ export default class RegistryEventTransformStream extends Transform {
                 "Event id": event.id,
                 "User id": event.userId,
                 "User Name": await getUserName(this.authApiUrl, event.userId),
-                Time: moment(event.eventTime).format("DD/MM/YYYY HH:mm:ss A"),
+                Time: moment(event.eventTime).format("YYYY-MM-DD HH:mm:ss"),
                 "Record Id": event?.data?.recordId,
                 "Record Name": await getRecordName(
                     this.registryApiUrl,
