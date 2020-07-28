@@ -63,11 +63,7 @@ function handleError(e: Error, res?: Response) {
  * @param {Request} [req]
  * @param {Response} [res]
  */
-export default async function myFunction(
-    input: any,
-    req?: Request,
-    res?: Response
-) {
+export default async function main(input: any, req?: Request, res?: Response) {
     try {
         if (req?.query?.recordId) {
             // function is served by http server and GET request
@@ -75,7 +71,7 @@ export default async function myFunction(
         }
 
         if (typeof input !== "string") {
-            throw new Error("Expect record ID as input.");
+            throw new Error("Expect record ID as input");
         }
         const recordId = input;
 
