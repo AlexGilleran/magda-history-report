@@ -73,7 +73,7 @@ async function getRecordName(
                 ? recordNameCache[userId]
                 : "N/A";
         }
-        return userNameCache[userId];
+        return recordNameCache[userId];
     } catch (e) {
         return "N/A";
     }
