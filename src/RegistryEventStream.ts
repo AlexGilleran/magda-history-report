@@ -2,7 +2,7 @@ import fetch from "isomorphic-fetch";
 import { Readable } from "stream";
 import signJwtToken from "./signJwtToken";
 
-const DEFAULT_FETCH_ASPECTS = [
+export const DEFAULT_FETCH_ASPECTS = [
     "dcat-dataset-strings",
     "dcat-distribution-strings",
     "dataset-distributions",
