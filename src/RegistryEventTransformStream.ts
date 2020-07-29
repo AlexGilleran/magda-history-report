@@ -1,6 +1,5 @@
 import { Transform } from "stream";
 import { Event } from "./RegistryEventStream";
-import moment from "moment";
 import signJwtToken from "./signJwtToken";
 
 const DEFAULT_HIGH_WATER_MARK = 50;
@@ -127,7 +126,7 @@ export default class RegistryEventTransformStream extends Transform {
                 "Event id": event.id,
                 "User id": event.userId,
                 "User Name": await getUserName(this.authApiUrl, event.userId),
-                Time: moment(event.eventTime).format("YYYY-MM-DD HH:mm:ss"),
+                Time: event.eventTime,
                 "Record Id": event?.data?.recordId,
                 "Record Name": await getRecordName(
                     this.registryApiUrl,
