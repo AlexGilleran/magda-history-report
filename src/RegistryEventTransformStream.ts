@@ -137,9 +137,16 @@ export default class RegistryEventTransformStream extends Transform {
                 "Aspect Id": event?.data?.aspectId ? event.data.aspectId : ""
             } as any;
 
-            const jsonData = JSON.stringify(
-                event?.data?.aspect ? event.data.aspect : event.data
-            );
+            let jsonData: string = "";
+            if (
+                event.eventType !== "DeleteRecord" &&
+                event.eventType !== "DeleteRecordAspect"
+            ) {
+                jsonData = JSON.stringify(
+                    event?.data?.aspect ? event.data.aspect : event.data
+                );
+            }
+
             const jsonPatch = (event?.data?.patch
                 ? event.data.patch
                 : []) as any[];
