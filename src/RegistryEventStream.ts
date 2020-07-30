@@ -131,6 +131,7 @@ export default class RegistryEventStream extends Readable {
         this.userId = options.userId;
         this.dataCache = [];
         this.isPushing = false;
+        this.hasMore = true;
     }
 
     async pushTillFull() {
@@ -170,6 +171,10 @@ export default class RegistryEventStream extends Readable {
 
     async fetchMore() {
         try {
+            if (!this.hasMore) {
+                return false;
+            }
+
             const opts = {
                 limit: this.limit
             } as any;
@@ -189,10 +194,6 @@ export default class RegistryEventStream extends Readable {
             );
 
             this.hasMore = data?.hasMore ? true : false;
-            if (!this.hasMore || !data?.events?.length) {
-                return false;
-            }
-
             this.pageToken = data?.nextPageToken ? data.nextPageToken : "";
 
             if (this.hasMore && !this.pageToken) {
@@ -202,8 +203,12 @@ export default class RegistryEventStream extends Readable {
                 );
             }
 
-            this.dataCache = this.dataCache.concat(data.events);
-            return true;
+            if (data?.events?.length) {
+                this.dataCache = this.dataCache.concat(data.events);
+                return true;
+            } else {
+                return false;
+            }
         } catch (e) {
             this.destroy(e);
             return false;

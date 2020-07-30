@@ -29,6 +29,7 @@
     "@types/mocha": "^7.0.1",
     "@types/mock-fs": "^4.10.0",
     "@types/nock": "^11.1.0",
+    "@types/urijs": "^1.19.9",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "dev-null": "^0.1.1",
@@ -39,7 +40,8 @@
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.0",
     "ts-node": "^8.10.2",
-    "typescript": "^3.9.2"
+    "typescript": "^3.9.2",
+    "urijs": "^1.19.2"
   },
   "dependencies": {
     "@magda/scripts": "^0.0.57-0",
