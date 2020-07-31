@@ -361,20 +361,27 @@ describe("RegistryEventTransformStream", () => {
                 patch: [
                     {
                         op: "replace",
-                        path: "/modified",
-                        value: "2020-07-28T08:39:48.870Z"
-                    },
-                    {
-                        op: "replace",
                         path: "/title",
                         value: "test new title"
                     },
                     {
                         op: "remove",
                         path: "/test-field"
+                    },
+                    {
+                        op: "add",
+                        path: "/versions/-",
+                        value: {
+                            title: "credit_lic_202006.csv",
+                            creatorId: testEventUserId,
+                            createTime: "2020-07-28T08:39:48.870Z",
+                            description:
+                                "Replaced or superseded by a new distribution",
+                            versionNumber: 1
+                        }
                     }
                 ],
-                aspectId: "dcat-dataset-strings",
+                aspectId: "version",
                 recordId: testRecordId,
                 tenantId: parseInt(testTenantId)
             },
@@ -399,21 +406,7 @@ describe("RegistryEventTransformStream", () => {
                 "Record Id": event.data.recordId,
                 "Record Name": testRecordName,
                 "Event type": event.eventType,
-                "Aspect Id": "dcat-dataset-strings",
-                "JSON Patch Operation": "replace",
-                "JSON Path": "/modified",
-                "JSON Path Value": "2020-07-28T08:39:48.870Z",
-                "JSON Value": ""
-            },
-            {
-                "Event id": event.id,
-                "User id": event.userId,
-                "User Name": testEventUserName,
-                Time: event.eventTime,
-                "Record Id": event.data.recordId,
-                "Record Name": testRecordName,
-                "Event type": event.eventType,
-                "Aspect Id": "dcat-dataset-strings",
+                "Aspect Id": "version",
                 "JSON Patch Operation": "replace",
                 "JSON Path": "/title",
                 "JSON Path Value": "test new title",
@@ -427,10 +420,25 @@ describe("RegistryEventTransformStream", () => {
                 "Record Id": event.data.recordId,
                 "Record Name": testRecordName,
                 "Event type": event.eventType,
-                "Aspect Id": "dcat-dataset-strings",
+                "Aspect Id": "version",
                 "JSON Patch Operation": "remove",
                 "JSON Path": "/test-field",
                 "JSON Path Value": "",
+                "JSON Value": ""
+            },
+            {
+                "Event id": event.id,
+                "User id": event.userId,
+                "User Name": testEventUserName,
+                Time: event.eventTime,
+                "Record Id": event.data.recordId,
+                "Record Name": testRecordName,
+                "Event type": event.eventType,
+                "Aspect Id": "version",
+                "JSON Patch Operation": "add",
+                "JSON Path": "/versions/-",
+                "JSON Path Value":
+                    '{"title":"credit_lic_202006.csv","creatorId":"test-user-id-5","createTime":"2020-07-28T08:39:48.870Z","description":"Replaced or superseded by a new distribution","versionNumber":1}',
                 "JSON Value": ""
             }
         ]);
