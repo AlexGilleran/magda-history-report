@@ -11,7 +11,6 @@
     "build": "tsc -b",
     "watch": "tsc -b --watch",
     "start": "node dist/index.js",
-    "dev": "run-typescript-in-nodemon src/index.ts",
     "test": "mocha --require ts-node/register \"src/test/**/*.spec.ts\"",
     "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
     "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
