@@ -3,6 +3,7 @@ import path from "path";
 import { promisify } from "util";
 
 const SECRET_DIR = "/var/openfaas/secrets/";
+
 const secretCache = {} as {
     [key: string]: string | Buffer;
 };
