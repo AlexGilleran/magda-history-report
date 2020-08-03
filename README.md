@@ -8,13 +8,9 @@ An Openfass Serverless Function template for Magda. You can also use [faas-cli](
 
 Please note: this function requires the secret `auth-secrets` in openfaas function namespace.
 
-The newer version `create-secrets` that is available in Magda repo should create secret `auth-secrets` in openfaas function already.
+The recommended approach is to install [kubernetes-replicator](https://github.com/mittwald/kubernetes-replicator) in the cluster and let it automated async the secret to openfaas function namespace.
 
-If you want to install this function to an existing deployment, you can use the following command to copy secret `auth-secrets` from main magda namespace (assume main namespace is `default`).
-
-```bash
-kubectl get secret auth-secrets --namespace=default --export -o yaml | kubectl apply --namespace=default-openfaas-fn -f -
-```
+The newer version `create-secrets` that is available in Magda repo should create secret `auth-secrets` in main namespace with appropriate annotation for this.
 
 ### Install Project Dependencies
 
