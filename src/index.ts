@@ -109,7 +109,7 @@ export default async function main(input: any, req?: Request, res?: Response) {
                 Expires: "Sat, 26 Jul 1997 05:00:00 GMT",
                 "Content-Type": "text/csv",
                 // prompt download dialog
-                "Content-Disposition": `attachment; filename-"history-${recordId.replace(
+                "Content-Disposition": `attachment; filename="history-${recordId.replace(
                     /[^\da-zA-Z\-]/g,
                     "-"
                 )}.csv"`
