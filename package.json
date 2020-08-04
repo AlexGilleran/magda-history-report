@@ -1,8 +1,8 @@
 {
-  "name": "magda-function-template",
-  "version": "1.0.0",
+  "name": "magda-function-history-report",
+  "version": "0.0.57-0",
   "description": "An Openfass Serverless Function template for Magda",
-  "repository": "https://github.com/magda-io/magda-function-template.git",
+  "repository": "https://github.com/magda-io/magda-function-history-report.git",
   "author": "Jacky Jiang <t83714@gmail.com>",
   "license": "Apache-2.0",
   "private": true,
@@ -11,39 +11,49 @@
     "build": "tsc -b",
     "watch": "tsc -b --watch",
     "start": "node dist/index.js",
-    "dev": "run-typescript-in-nodemon src/bootstrap.ts",
     "test": "mocha --require ts-node/register \"src/test/**/*.spec.ts\"",
     "docker-build-local": "create-docker-context-for-node-component --build --push --tag auto --local",
     "docker-build-prod": "create-docker-context-for-node-component --build --push --tag auto",
-    "helm-lint": "helm lint deploy/magda-function-template -f deploy/test-deploy.yaml",
-    "deploy-local": "helm template deploy/magda-function-template -f deploy/minikube-dev.yaml | kubectl apply -f -",
+    "helm-lint": "helm lint deploy/magda-function-history-report -f deploy/test-deploy.yaml",
+    "deploy-local": "helm template deploy/magda-function-history-report -f deploy/minikube-dev.yaml | kubectl apply -f -",
     "retag-and-push": "retag-and-push"
   },
   "devDependencies": {
     "@magda/scripts": "^0.0.57-0",
     "@types/chai": "^4.2.8",
-    "@types/express": "^4.17.6",
+    "@types/chai-as-promised": "^7.1.3",
+    "@types/express": "^4.0.37",
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/mocha": "^7.0.1",
+    "@types/mock-fs": "^4.10.0",
+    "@types/nock": "^11.1.0",
+    "@types/stream-array": "^1.1.0",
     "@types/urijs": "^1.19.9",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "dev-null": "^0.1.1",
     "husky": "^3.1.0",
     "mocha": "^7.0.1",
+    "mock-fs": "^4.12.0",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.0",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.7.2"
+    "stream-array": "^1.1.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.2",
+    "urijs": "^1.19.2"
   },
   "dependencies": {
-    "@magda/registry-client": "^0.0.57-0-beta-2",
     "@magda/scripts": "^0.0.57-0",
-    "@magda/typescript-common": "^0.0.57-0-temp",
-    "csv-writer": "^1.6.0",
-    "express": "^4.15.4"
+    "csv-stringify": "^5.5.0",
+    "express": "^4.15.4",
+    "isomorphic-fetch": "^2.2.1",
+    "jsonwebtoken": "^8.5.1"
   },
   "config": {
     "docker": {
-      "name": "data61/magda-function-template",
+      "name": "data61/magda-function-history-report",
       "include": "node_modules dist Dockerfile package.json bootstrap.js"
     }
   },

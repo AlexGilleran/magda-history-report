@@ -17,6 +17,26 @@
                 "tsconfig-paths/register",
                 "src/test/**/*.spec.ts"
             ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "protocol": "inspector",
+            "name": "Run function locally",
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
+            "env": {
+                "registryApiUrl": "http://localhost:6101/v0",
+                "authApiUrl": "http://localhost:6104/v0",
+                "JWT_SECRET": "xxxxxxxxxxx"
+            },
+            "cwd": "${workspaceFolder}",
+            "runtimeArgs": ["src/index.ts"],
+            "args": [
+                "--require",
+                "ts-node/register",
+                "--require",
+                "tsconfig-paths/register"
+            ]
         }
     ]
 }

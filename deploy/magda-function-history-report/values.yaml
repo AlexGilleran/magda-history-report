@@ -9,7 +9,7 @@ global:
 # You can set `imagePullSecret` value to `false` (bool) to reset the value (see example below)
 
 image: 
-  name: "magda-function-template"
+  name: "magda-function-history-report"
   # repository: 
   # tag: 
   # pullPolicy: 
@@ -28,8 +28,13 @@ resources:
   limits:
     cpu: 100m
 
+# used to generate registry api base url
+registryApiVersion: "v0"
+authApiVersion: "v0"
+
+tenantId: 0
+
 # Set a list of secrets that pass to function
 # Secrets are accessible from `/var/openfaas/secrets/<secret-name>` as file
-# secrets:
-# - secret-name-1
-# - secret-name-2
+secrets:
+- auth-secrets

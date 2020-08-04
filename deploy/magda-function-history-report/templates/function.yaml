@@ -4,9 +4,9 @@ apiVersion: openfaas.com/v1
 kind: Function
 metadata:
   name: {{ .Chart.Name }}
-  namespace: {{ include "magda-function-template.openfaaFunctionNamespace" . | quote }}
+  namespace: {{ include "magda-function-history-report.openfaasFunctionNamespace" . | quote }}
   labels: 
-    magdaType: 
+    magdaType: report
 spec:
   name: {{ .Chart.Name }}
   handler: node bootstrap.js
@@ -22,6 +22,9 @@ spec:
     read_timeout: 65s
     write_timeout: 65s
     exec_timeout: 60s
+    tenantId: {{ .Values.tenantId | quote }}
+    registryApiUrl: {{ include "magda-function-history-report.registryApiUrl" . | quote }}
+    authApiUrl: {{ include "magda-function-history-report.authApiUrl" . | quote }}
 {{- /*
 See chart value file for details of the logic used to generate this setting value below.!!!
 */}}

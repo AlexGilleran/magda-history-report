@@ -1,20 +1,16 @@
-# magda-function-template
+# magda-function-history-report
 
 An Openfass Serverless Function template for Magda. You can also use [faas-cli](https://github.com/openfaas/faas-cli) to create a Openfaas function. However, this template leverage our own toolset and works with our own deployment / CI system better.
 
 > You can click the `Use this template` Github function button above to create a new repository from this template repository instead of forking it. More details see [Github Help Document: Creating a repository from a template](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template)
 
-### Supply Your Own Function Code
+### Secret Requirement
 
-You can supply your own function code in [`src/index.ts`](./src/index.ts). e.g.:
+Please note: this function requires the secret `auth-secrets` in openfaas function namespace.
 
-```typescript
-export default async function myFunction(input: any) {
-    return "hello world!\n";
-}
-```
+The recommended approach is to install [kubernetes-replicator](https://github.com/mittwald/kubernetes-replicator) in the cluster and let it automated async the secret to openfaas function namespace.
 
-> Invoke you function with `Content-Type: application/json` header will make your function receive unserialised data as input parameter.
+The newer version `create-secrets` that is available in Magda repo should create secret `auth-secrets` in main namespace with appropriate annotation for this.
 
 ### Install Project Dependencies
 
@@ -37,20 +33,20 @@ yarn install
     -   Install [`faas-cli`](https://github.com/openfaas/faas-cli)
     -   Run `kubectl --namespace=[openfaas gateway namespace] port-forward svc/gateway 8080` to port-forward openfaas gateway
         -   Here, [openfaas gateway namespace] is `[magda-core namespace]-openfaas`. e.g. if magda is deployed to `default` namespace, `[openfaas gateway namespace]` would be `default-openfaas`
-    -   Invoke by Run `echo "" | faas-cli faas-cli invoke magda-function-template`
-    -   Alternatively, you can use [Postman](https://www.postman.com/) to send a HTTP Request (HTTP method doesn't matter here) to Magda gateway `/api/v0/openfaas/function/magda-function-template`
+    -   Invoke by Run `echo "" | faas-cli faas-cli invoke magda-function-history-report`
+    -   Alternatively, you can use [Postman](https://www.postman.com/) to send a HTTP Request (HTTP method doesn't matter here) to Magda gateway `/api/v0/openfaas/function/magda-function-history-report`
 
 ### Deploy with Magda
 
 -   Add as Magda dependencies:
 
 ```yaml
-- name: magda-function-template
+- name: magda-function-history-report
   version: 0.0.57-0
   repository: https://charts.magda.io
   tags:
       - all
-      - magda-function-template
+      - magda-function-history-report
 ```
 
 -   Run `helm dep build` to pull the dependency

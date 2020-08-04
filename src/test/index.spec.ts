@@ -1,10 +1,12 @@
-// import { expect } from "chai";
-// import "mocha";
-// import myFunction from "../index";
+import chai, { expect } from "chai";
+chai.use(require("chai-as-promised"));
+import "mocha";
+import main from "../index";
 
-// describe("Test Function", () => {
-//     it("should return 'Hello world!\n'", async () => {
-//         const result = await myFunction(undefined);
-//         expect(result).to.equal("Hello world!\n");
-//     });
-// });
+describe("Test Main Function", () => {
+    it("should throw `Expect record ID as input` if no recordIs is provided", async () => {
+        await expect(main(undefined)).to.be.rejectedWith(
+            "Expect record ID as input"
+        );
+    });
+});
