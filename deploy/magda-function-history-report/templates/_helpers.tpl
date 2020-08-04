@@ -3,7 +3,7 @@
 {{/*
 Generating the openfaas function namespace
 */}}
-{{- define "magda-function-history-report.openfaaFunctionNamespace" -}}
+{{- define "magda-function-history-report.openfaasFunctionNamespace" -}}
 {{- $namespacePrefix := .Values.global.openfaas.namespacePrefix | default .Release.Namespace -}}
 {{- $functionNamespace := .Values.global.openfaas.functionNamespace | default "openfaas-fn" -}}
 {{- if not $functionNamespace -}}
