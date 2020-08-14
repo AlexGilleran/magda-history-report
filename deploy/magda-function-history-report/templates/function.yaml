@@ -1,5 +1,7 @@
 # More exmaples of openfaas function here: https://github.com/openfaas/openfaas-operator
-{{- $_ := (.Values.global.openfaas.enabled | ternary true nil )  | required "`magda-function-history-report` requires `magda-core`.`openfaas` to deploy. Please turn of openfaas by setting `global.openfaas.enabled` to `true` or turn off `magda-function-history-report` to avoid this error." }}
+{{- if .Values.global.openfaas.enabled | default false | ne true }}
+{{- fail "`magda-function-history-report` requires `magda-core`.`openfaas` to deploy. Please turn of openfaas by setting `global.openfaas.enabled` to `true` or turn off `magda-function-history-report` to avoid this error." }}
+{{- else }}
 apiVersion: openfaas.com/v1
 kind: Function
 metadata:
@@ -44,3 +46,4 @@ See chart value file for details of the logic used to generate this setting valu
   {{- end }}
 {{- end }}
 {{ .Values.resources | toYaml | indent 2 -}}
+{{- end }}
