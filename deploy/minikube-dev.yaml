@@ -1,5 +1,6 @@
 global:
   openfaas:
+    enabled: true
     # namespacePrefix should be magda-core deployment namesapce
     # We only need this when deploy function seperately
     namespacePrefix: default

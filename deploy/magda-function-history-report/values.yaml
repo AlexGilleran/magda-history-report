@@ -1,7 +1,6 @@
 global:
   image: {}
-  openfaas:
-    enabled: true
+  openfaas: {}
 
 # image setting loadding order: (from higher priority to lower priority)
 # - Values.image.x

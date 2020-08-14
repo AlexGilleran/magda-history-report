@@ -4,6 +4,7 @@ image:
 
 global:
   openfaas:
+    enabled: true
     functionNamespace: openfaas-fn
 
 secrets:
