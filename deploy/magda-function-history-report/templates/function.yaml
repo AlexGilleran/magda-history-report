@@ -1,5 +1,7 @@
 # More exmaples of openfaas function here: https://github.com/openfaas/openfaas-operator
-{{- if and .Values.global.openfaas .Values.global.openfaas.functionNamespace }}
+{{- if .Values.global.openfaas.enabled | default false | ne true }}
+{{- fail "`magda-function-history-report` requires `magda-core`.`openfaas` to deploy. Please turn of openfaas by setting `global.openfaas.enabled` to `true` or turn off `magda-function-history-report` to avoid this error." }}
+{{- else }}
 apiVersion: openfaas.com/v1
 kind: Function
 metadata:
