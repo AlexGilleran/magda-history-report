@@ -76,6 +76,10 @@ This repo comes with script to build, test & release script to release docker im
 
 Kubernetes: `>= 1.14.0-0`
 
+| Repository              | Name         | Version       |
+| ----------------------- | ------------ | ------------- |
+| https://charts.magda.io | magda-common | 1.0.0-alpha.4 |
+
 ## Values
 
 | Key                          | Type   | Default                           | Description |
@@ -84,7 +88,6 @@ Kubernetes: `>= 1.14.0-0`
 | defaultImage.imagePullSecret | bool   | `false`                           |             |
 | defaultImage.pullPolicy      | string | `"IfNotPresent"`                  |             |
 | defaultImage.repository      | string | `"docker.io/data61"`              |             |
-| defaultImage.tag             | string | `"0.0.57-0"`                      |             |
 | global.image                 | object | `{}`                              |             |
 | global.openfaas              | object | `{}`                              |             |
 | image.name                   | string | `"magda-function-history-report"` |             |
