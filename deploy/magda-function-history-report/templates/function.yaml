@@ -12,7 +12,7 @@ metadata:
 spec:
   name: {{ .Chart.Name }}
   handler: node bootstrap.js
-  image: "{{ .Values.image.repository | default .Values.global.image.repository | default .Values.defaultImage.repository }}/{{ .Values.image.name }}:{{ .Values.image.tag | default .Values.global.image.tag | default .Values.defaultImage.tag }}"
+  image: {{ include "magda.image" . | quote }}
   labels: 
     com.openfaas.scale.zero: "true"
     # You can add any other labels to help the caller to tell the purpose of the functions
@@ -27,23 +27,15 @@ spec:
     tenantId: {{ .Values.tenantId | quote }}
     registryApiUrl: {{ include "magda-function-history-report.registryApiUrl" . | quote }}
     authApiUrl: {{ include "magda-function-history-report.authApiUrl" . | quote }}
-{{- /*
-See chart value file for details of the logic used to generate this setting value below.!!!
-*/}}
-{{- $imagePullSecret := (ne (.Values.image.imagePullSecret | typeOf) "<nil>") | ternary .Values.image.imagePullSecret ( (ne (.Values.global.image.imagePullSecret | typeOf) "<nil>") | ternary .Values.global.image.imagePullSecret .Values.defaultImage.imagePullSecret ) -}}
-{{- if .Values.secrets }}
+  {{- $pullSecrets := include "magda.image.getConsolidatedPullSecretList" . | mustFromJson }}
+  {{- if and (.Values.secrets | empty | not) (kindIs "slice" .Values.secrets) }}
+    {{- $pullSecrets = concat $pullSecrets .Values.secrets }}
+  {{- end }}
+  {{- if (not (empty $pullSecrets)) }}
   secrets: 
-  {{- range .Values.secrets }}
-    - {{.}}
+    {{- range $pullSecrets }}
+    - {{ . | quote }}
+    {{- end }}
   {{- end }}
-  {{- if ne ($imagePullSecret | toString) "false" }}
-    - {{ $imagePullSecret }}
-  {{- end }}
-{{- else }}
-  {{- if ne ($imagePullSecret | toString) "false" }}
-  secrets: 
-    - {{ $imagePullSecret }}
-  {{- end }}
-{{- end }}
 {{ .Values.resources | toYaml | indent 2 -}}
 {{- end }}
