@@ -72,28 +72,11 @@ This repo comes with script to build, test & release script to release docker im
 -   `DOCKER_HUB_PASSWORD`: Magda docker hub bot password
 -   `GITHUB_ACCESS_TOKEN`: Magda github bot access token
 
-## Requirements
 
-Kubernetes: `>= 1.14.0-0`
+{{ template "chart.maintainersSection" . }}
 
-| Repository              | Name         | Version       |
-| ----------------------- | ------------ | ------------- |
-| https://charts.magda.io | magda-common | 1.0.0-alpha.4 |
+{{ template "chart.requirementsSection" . }}
 
-## Values
+{{ template "chart.valuesHeader" . }}
 
-| Key                          | Type   | Default                           | Description |
-| ---------------------------- | ------ | --------------------------------- | ----------- |
-| authApiVersion               | string | `"v0"`                            |             |
-| defaultImage.imagePullSecret | bool   | `false`                           |             |
-| defaultImage.pullPolicy      | string | `"IfNotPresent"`                  |             |
-| defaultImage.repository      | string | `"docker.io/data61"`              |             |
-| global.image                 | object | `{}`                              |             |
-| global.openfaas              | object | `{}`                              |             |
-| image.name                   | string | `"magda-function-history-report"` |             |
-| registryApiVersion           | string | `"v0"`                            |             |
-| resources.limits.cpu         | string | `"100m"`                          |             |
-| resources.requests.cpu       | string | `"50m"`                           |             |
-| resources.requests.memory    | string | `"30Mi"`                          |             |
-| secrets[0]                   | string | `"auth-secrets"`                  |             |
-| tenantId                     | int    | `0`                               |             |
+{{ template "chart.valuesTable" . }}
