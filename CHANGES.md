@@ -1,3 +1,8 @@
+# 1.1.0
+
+-   Remove labels from metadata ( use labels in `spec` instead)
+-   Release multi-arch docker images (linux/amd64, linux/arm64) from CI pipeline
+
 # 1.0.0
 
 -   Upgrade dependencies
