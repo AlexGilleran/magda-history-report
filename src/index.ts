@@ -129,7 +129,7 @@ export default async function main(input: any, req?: Request, res?: Response) {
 
         stream.on("error", e => handleError(e, res));
     } catch (e) {
-        handleError(e, res);
+        handleError(e as Error, res);
     }
 
     if (res) {

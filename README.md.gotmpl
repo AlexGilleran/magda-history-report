@@ -42,12 +42,14 @@ yarn install
 
 ```yaml
 - name: magda-function-history-report
-  version: 0.0.57-0
-  repository: https://charts.magda.io
+  version: "2.0.0" # or put latest version number here
+  repository: "oci://ghcr.io/magda-io/charts"
   tags:
-      - all
-      - magda-function-history-report
+    - all
+    - magda-function-history-report
 ```
+
+> Since v2.0.0, we use [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) as our official Helm Chart & Docker Image release registry.
 
 -   Run `helm dep build` to pull the dependency
 -   Deploy Magda

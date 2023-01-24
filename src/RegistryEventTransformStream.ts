@@ -177,7 +177,7 @@ export default class RegistryEventTransformStream extends Transform {
             }
             callback();
         } catch (e) {
-            callback(e);
+            callback(e as Error);
         }
     }
 }
