@@ -163,7 +163,7 @@ export default class RegistryEventStream extends Readable {
                 pushMore = this.push(event);
             }
         } catch (e) {
-            this.destroy(e);
+            this.destroy(e as Error);
         } finally {
             this.isPushing = false;
         }
@@ -210,7 +210,7 @@ export default class RegistryEventStream extends Readable {
                 return false;
             }
         } catch (e) {
-            this.destroy(e);
+            this.destroy(e as Error);
             return false;
         }
     }

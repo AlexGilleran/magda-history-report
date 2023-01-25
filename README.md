@@ -42,12 +42,14 @@ yarn install
 
 ```yaml
 - name: magda-function-history-report
-  version: 0.0.57-0
-  repository: https://charts.magda.io
+  version: "2.0.0" # or put latest version number here
+  repository: "oci://ghcr.io/magda-io/charts"
   tags:
       - all
       - magda-function-history-report
 ```
+
+> Since v2.0.0, we use [Github Container Registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) as our official Helm Chart & Docker Image release registry.
 
 -   Run `helm dep build` to pull the dependency
 -   Deploy Magda
@@ -76,9 +78,9 @@ This repo comes with script to build, test & release script to release docker im
 
 Kubernetes: `>= 1.14.0-0`
 
-| Repository              | Name         | Version       |
-| ----------------------- | ------------ | ------------- |
-| https://charts.magda.io | magda-common | 1.0.0-alpha.4 |
+| Repository                    | Name         | Version |
+| ----------------------------- | ------------ | ------- |
+| oci://ghcr.io/magda-io/charts | magda-common | 2.1.1   |
 
 ## Values
 
@@ -87,7 +89,7 @@ Kubernetes: `>= 1.14.0-0`
 | authApiVersion               | string | `"v0"`                            |             |
 | defaultImage.imagePullSecret | bool   | `false`                           |             |
 | defaultImage.pullPolicy      | string | `"IfNotPresent"`                  |             |
-| defaultImage.repository      | string | `"docker.io/data61"`              |             |
+| defaultImage.repository      | string | `"ghcr.io/magda-io"`              |             |
 | global.image                 | object | `{}`                              |             |
 | global.openfaas              | object | `{}`                              |             |
 | image.name                   | string | `"magda-function-history-report"` |             |
